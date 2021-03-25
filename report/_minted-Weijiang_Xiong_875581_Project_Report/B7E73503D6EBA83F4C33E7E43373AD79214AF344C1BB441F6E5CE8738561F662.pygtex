@@ -1,0 +1,18 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{def} \PYG{n+nf}{compute\PYGZus{}mse}\PYG{p}{(}\PYG{n}{pred}\PYG{p}{,} \PYG{n}{label}\PYG{p}{):}
+    \PYG{n}{pred}\PYG{p}{,} \PYG{n}{ref} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{(}\PYG{n}{pred}\PYG{p}{),} \PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{(}\PYG{n}{label}\PYG{p}{)}
+    \PYG{k}{return} \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{((}\PYG{n}{pred}\PYG{o}{\PYGZhy{}}\PYG{n}{ref}\PYG{p}{)}\PYG{o}{**}\PYG{l+m+mi}{2}\PYG{p}{)}
+
+\PYG{k}{def} \PYG{n+nf}{pred\PYGZus{}results}\PYG{p}{(}\PYG{n}{algo}\PYG{p}{,} \PYG{n}{testset}\PYG{p}{):}
+    \PYG{n}{output} \PYG{o}{=} \PYG{n}{algo}\PYG{o}{.}\PYG{n}{test}\PYG{p}{(}\PYG{n}{testset}\PYG{p}{)}
+    \PYG{n}{preds} \PYG{o}{=} \PYG{p}{[}\PYG{n}{x}\PYG{o}{.}\PYG{n}{est} \PYG{k}{for} \PYG{n}{x} \PYG{o+ow}{in} \PYG{n}{output}\PYG{p}{]}
+    \PYG{n}{labels} \PYG{o}{=} \PYG{p}{[}\PYG{n}{x}\PYG{o}{.}\PYG{n}{r\PYGZus{}ui} \PYG{k}{for} \PYG{n}{x} \PYG{o+ow}{in} \PYG{n}{output}\PYG{p}{]}
+    \PYG{k}{return} \PYG{n}{preds}\PYG{p}{,} \PYG{n}{labels}
+\PYG{c+c1}{\PYGZsh{} test\PYGZus{}size is 0.25 because we need 20\PYGZpc{} data for validation, but the file}
+\PYG{c+c1}{\PYGZsh{} contains 80\PYGZpc{} of the whole data, 0.8*0.25 = 0.2}
+\PYG{n}{trainset}\PYG{p}{,} \PYG{n}{validset} \PYG{o}{=} \PYG{n}{train\PYGZus{}test\PYGZus{}split}\PYG{p}{(}\PYG{n}{dataset}\PYG{p}{,} \PYG{n}{test\PYGZus{}size}\PYG{o}{=}\PYG{l+m+mf}{0.25}\PYG{p}{,} \PYG{n}{shuffle}\PYG{o}{=}\PYG{k+kc}{True}\PYG{p}{)}
+\PYG{n}{train\PYGZus{}preds}\PYG{p}{,} \PYG{n}{train\PYGZus{}labels} \PYG{o}{=} \PYG{n}{pred\PYGZus{}results}\PYG{p}{(}\PYG{n}{svd}\PYG{o}{.}\PYG{n}{fit}\PYG{p}{(}\PYG{n}{trainset}\PYG{p}{),} \PYG{n}{trainset}\PYG{o}{.}\PYG{n}{build\PYGZus{}testset}\PYG{p}{())}
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}MSE on Train Set }\PYG{l+s+si}{\PYGZob{}\PYGZcb{}}\PYG{l+s+s2}{\PYGZdq{}}\PYG{o}{.}\PYG{n}{format}\PYG{p}{(}\PYG{n}{compute\PYGZus{}mse}\PYG{p}{(}\PYG{n}{train\PYGZus{}preds}\PYG{p}{,} \PYG{n}{train\PYGZus{}labels}\PYG{p}{)))}
+\PYG{n}{valid\PYGZus{}preds}\PYG{p}{,} \PYG{n}{valid\PYGZus{}labels} \PYG{o}{=} \PYG{n}{pred\PYGZus{}results}\PYG{p}{(}\PYG{n}{svd}\PYG{p}{,} \PYG{n}{validset}\PYG{p}{)}
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}MSE on Validation Set }\PYG{l+s+si}{\PYGZob{}\PYGZcb{}}\PYG{l+s+s2}{\PYGZdq{}}\PYG{o}{.}\PYG{n}{format}\PYG{p}{(}\PYG{n}{compute\PYGZus{}mse}\PYG{p}{(}\PYG{n}{valid\PYGZus{}preds}\PYG{p}{,} \PYG{n}{valid\PYGZus{}labels}\PYG{p}{)))}
+\end{Verbatim}

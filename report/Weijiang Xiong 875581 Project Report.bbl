@@ -1,0 +1,56 @@
+\begin{thebibliography}{1}\itemsep=-1pt
+
+\bibitem{SVD}
+Simon Funk.
+\newblock Svd algorithm.
+\newblock \url{https://sifter.org/~simon/journal/20061211.html}.
+\newblock Accessed: 24 Mar. 2021.
+
+\bibitem{hinton2012dropout}
+Geoffrey~E Hinton, Nitish Srivastava, Alex Krizhevsky, Ilya Sutskever, and
+  Ruslan~R Salakhutdinov.
+\newblock Improving neural networks by preventing co-adaptation of feature
+  detectors.
+\newblock {\em arXiv preprint arXiv:1207.0580}, 2012.
+
+\bibitem{surprise}
+Nicolas Hug.
+\newblock Scikit-learn surprise package.
+\newblock \url{https://github.com/NicolasHug/Surprise}.
+\newblock Accessed: 24 Mar. 2021.
+
+\bibitem{DLCourse}
+Alexander Ilin.
+\newblock Cs-e4890 deep learning lecture 4.
+\newblock
+  \url{https://mycourses.aalto.fi/pluginfile.php/1436564/mod_resource/content/4/reg_all_slides.pdf}.
+\newblock Accessed: 24 Mar. 2021.
+
+\bibitem{MLBook}
+Alexander Jung.
+\newblock Machine learning basics book.
+\newblock
+  \url{https://github.com/alexjungaalto/MachineLearningTheBasics/blob/master/MLBasicsBook.pdf}.
+\newblock Accessed: 24 Mar. 2021.
+
+\bibitem{embedding}
+PyTorch.
+\newblock Embedding layer.
+\newblock
+  \url{https://pytorch.org/docs/stable/generated/torch.nn.Embedding.html}.
+\newblock Accessed: 24 Mar. 2021.
+
+\bibitem{MovieDataset}
+GroupLens Research.
+\newblock Movie rating dataset.
+\newblock \url{https://grouplens.org/datasets/movielens/latest/}.
+\newblock Accessed: 24 Mar. 2021.
+
+\bibitem{RSLecture}
+Stephan Sigg.
+\newblock Lecture slides of cs-c3240 machine learning.
+\newblock
+  \url{https://mycourses.aalto.fi/pluginfile.php/1415791/mod_page/content/23/CS-C3240_Round3_AnomalyDetection-OnlineLeaning-RecommenderSystems.pdf}.
+\newblock Accessed: 24 Mar. 2021.
+
+\end{thebibliography}

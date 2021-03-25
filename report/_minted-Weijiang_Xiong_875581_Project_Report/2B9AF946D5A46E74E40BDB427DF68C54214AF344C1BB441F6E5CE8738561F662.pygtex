@@ -1,0 +1,28 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{import} \PYG{n+nn}{torch}
+\PYG{k+kn}{import} \PYG{n+nn}{torch.nn} \PYG{k}{as} \PYG{n+nn}{nn}
+\PYG{k}{class} \PYG{n+nc}{RecommenderSystem}\PYG{p}{(}\PYG{n}{nn}\PYG{o}{.}\PYG{n}{Module}\PYG{p}{):}
+    \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{n\PYGZus{}users}\PYG{p}{,} \PYG{n}{n\PYGZus{}items}\PYG{p}{,} \PYG{n}{n\PYGZus{}embed}\PYG{o}{=}\PYG{l+m+mi}{40}\PYG{p}{,}
+		\PYG{n}{dropout\PYGZus{}rate}\PYG{o}{=}\PYG{l+m+mf}{0.2}\PYG{p}{,} \PYG{n}{hidden\PYGZus{}neurons}\PYG{o}{=}\PYG{p}{[}\PYG{l+m+mi}{10}\PYG{p}{]):}
+        \PYG{n+nb}{super}\PYG{p}{(}\PYG{n}{RecommenderSystem}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{p}{)}\PYG{o}{.}\PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{()}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{user\PYGZus{}emb} \PYG{o}{=} \PYG{n}{nn}\PYG{o}{.}\PYG{n}{Embedding}\PYG{p}{(}\PYG{n}{n\PYGZus{}users}\PYG{p}{,} \PYG{n}{n\PYGZus{}embed}\PYG{p}{)}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{item\PYGZus{}emb} \PYG{o}{=} \PYG{n}{nn}\PYG{o}{.}\PYG{n}{Embedding}\PYG{p}{(}\PYG{n}{n\PYGZus{}items}\PYG{p}{,} \PYG{n}{n\PYGZus{}embed}\PYG{p}{)}
+        \PYG{n}{hidden\PYGZus{}block} \PYG{o}{=} \PYG{p}{[]}
+        \PYG{n}{last\PYGZus{}output} \PYG{o}{=} \PYG{n}{n\PYGZus{}embed}\PYG{o}{*}\PYG{l+m+mi}{2}
+        \PYG{k}{for} \PYG{n}{n\PYGZus{}hidden} \PYG{o+ow}{in} \PYG{n}{hidden\PYGZus{}neurons}\PYG{p}{:}
+            \PYG{n}{hidden\PYGZus{}block}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{nn}\PYG{o}{.}\PYG{n}{Linear}\PYG{p}{(}\PYG{n}{last\PYGZus{}output}\PYG{p}{,} \PYG{n}{n\PYGZus{}hidden}\PYG{p}{))}
+            \PYG{n}{hidden\PYGZus{}block}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{nn}\PYG{o}{.}\PYG{n}{Tanh}\PYG{p}{())}
+            \PYG{n}{hidden\PYGZus{}block}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{nn}\PYG{o}{.}\PYG{n}{Dropout}\PYG{p}{(}\PYG{n}{p}\PYG{o}{=}\PYG{n}{dropout\PYGZus{}rate}\PYG{p}{))}
+            \PYG{n}{last\PYGZus{}output} \PYG{o}{=} \PYG{n}{n\PYGZus{}hidden}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{hidden\PYGZus{}block} \PYG{o}{=} \PYG{n}{nn}\PYG{o}{.}\PYG{n}{Sequential}\PYG{p}{(}\PYG{o}{*}\PYG{n}{hidden\PYGZus{}block}\PYG{p}{)}
+        \PYG{k}{del} \PYG{n}{hidden\PYGZus{}block}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{output\PYGZus{}layer} \PYG{o}{=} \PYG{n}{nn}\PYG{o}{.}\PYG{n}{Linear}\PYG{p}{(}\PYG{n}{last\PYGZus{}output}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)}
+
+    \PYG{k}{def} \PYG{n+nf}{forward}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{user\PYGZus{}ids}\PYG{p}{,} \PYG{n}{item\PYGZus{}ids}\PYG{p}{):}
+        \PYG{n}{user\PYGZus{}feat} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{user\PYGZus{}emb}\PYG{p}{(}\PYG{n}{user\PYGZus{}ids}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{)}
+        \PYG{n}{item\PYGZus{}feat} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{item\PYGZus{}emb}\PYG{p}{(}\PYG{n}{item\PYGZus{}ids}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{)}
+        \PYG{n}{x} \PYG{o}{=} \PYG{n}{torch}\PYG{o}{.}\PYG{n}{cat}\PYG{p}{([}\PYG{n}{user\PYGZus{}feat}\PYG{p}{,} \PYG{n}{item\PYGZus{}feat}\PYG{p}{],} \PYG{n}{dim}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{)}
+        \PYG{n}{x} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{hidden\PYGZus{}block}\PYG{p}{(}\PYG{n}{x}\PYG{p}{)}
+        \PYG{n}{x} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{output\PYGZus{}layer}\PYG{p}{(}\PYG{n}{x}\PYG{p}{)}
+        \PYG{k}{return} \PYG{n}{torch}\PYG{o}{.}\PYG{n}{squeeze}\PYG{p}{(}\PYG{n}{x}\PYG{p}{)}
+\end{Verbatim}
