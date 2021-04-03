@@ -140,7 +140,7 @@
 \lhead{\footnotesize \assType\ \exeNum}% \lhead puts text in the top left corner. \footnotesize sets our font to a smaller size.
 
 %\rhead works just like \lhead (you can also use \chead)
-\rhead{\footnotesize \studentName\ (\studentNumber)} %<---- Fill in your lastnames.
+\rhead{\footnotesize \studentName\ } %<---- Fill in your lastnames.
 
 % Similar commands work for the footer (\lfoot, \cfoot and \rfoot).
 % We want to put our page number in the center.
@@ -212,8 +212,8 @@
 \newcommand{\assType}{Comparing Collaborative Filtering and Neural Network in Movie Recommender System}
 \newcommand{\courseName}{CS-C3240 Machine Learning}
 \newcommand{\semester}{Spring 2021}
-\newcommand{\studentName}{Weijiang Xiong}
-\newcommand{\studentNumber}{875581}
+\newcommand{\studentName}{Anonymous Submission}
+\newcommand{\studentNumber}{}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 \linespread{\lineSpace} % line spacing
@@ -240,7 +240,7 @@
 \begin{center} % Everything within the center environment is centered.
 	{\Large \bf \assType\ \exeNum} % <---- Don't forget to put in the right number
 
-	{\studentName\ (Student Number \studentNumber)} % <---- Fill in your names here!
+	{\studentName\ } % <---- Fill in your names here!
 		
 \end{center}  
 % 
@@ -478,12 +478,13 @@ Second, MSE Loss penalize high deviation heavily, this allows us to obtain resul
 
 
 \begin{rSection}{Experiments and Results}
+\label{sec: experiments and results}
+
 Before any of the following experiments, we need to reserve a part of data for the final test, and use the other data for training and validation.
 Specifically, the size of training, validation and testing data are 60\%, 20\% and 20\%.
 To do this, we need to load the original data table, shuffle the data and then save 20\% to a file for final testing.
 After that, we save the rest 80\% and proceed with "training-testing" scheme. 
-For the complete code of this project report, please refer to this link \url{https://github.com/Weijiang-Xiong/CS-C3240-Project}.
-\label{sec: experiments and results}
+% For the complete code of this project report, please refer to this link \url{https://github.com/Weijiang-Xiong/CS-C3240-Project}.
 
 \begin{rSubsection}{Collaborative Filter}
 To construct a suitable dataset for the algorithm, we need to use the built in classes \mintinline{text}{Dataset} and \mintinline{text}{Reader} in the \mintinline{text}{Surprise} package.
@@ -532,15 +533,17 @@ For this report, the batch size is chosen at 1024 and learning rate 0.01.
 The whole training process consists of 30 epochs, and in each epoch, we record the training loss and validation loss, which are presented in the figure below.
 
 While the implementation of collaborative filter needs just a few lines of codes, training a neural net actually requires more work. 
-Please refer to the github repo for the complete code.
+The complete code cannot be displayed because of limited report length, and the main missing part is the dataset.
+For that, the general idea is to compose a \mintinline{text}{TensorDataset} in \mintinline{text}{PyTorch} with the data, after loading and shuffling data.
+% Please refer to the github repo for the complete code.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.6\textwidth]{loss_curve.png}
 	\caption{Add captions here}
 \end{figure}
-
-This neural network achieves a best validation loss at 0.76, which is slightly lower than the collaborative filter implementation.
-Therefore, for this movie recommender system, we would prefer the Embedding net solution.
+From the figure above, we can see the training loss and validation loss (noted as Test Loss in the figure) decreases as the training process goes on.
+Concretely, this neural network achieves a best validation loss at 0.76, which is slightly lower than the collaborative filter implementation.
+Therefore, for this movie recommender system, we would (slightly) prefer the Embedding net solution.
 Further, we test the trained neural net with the initially reserved test set, and final test error turns out to be 0.77, which is almost the same as the validation loss.
 \end{rSubsection}
 \end{rSection}
